@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import ActivityDetailedHeader from "./ActivityDetaledHeader";
-import ActivityDetailedInfo from "./ActivityDetailedInf";
+import ActivityDetailedInfo from "./ActivityDetailedInfo";
 import ActivityDetailedChat from "./ActivityDetailedChat";
 import ActivityDetailedSidebar from "./ActivityDetailedSidebar";
 
