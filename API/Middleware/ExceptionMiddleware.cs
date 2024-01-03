@@ -1,3 +1,4 @@
+//middlewere to manage exceptions in dev mod or user mode
 using System.Net;
 using System.Text.Json;
 using Application.Core;

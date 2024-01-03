@@ -1,3 +1,4 @@
+//servises for main uses of the activities sections such as the database, mediatR and validation
 using Application.Activities;
 using Application.Core;
 using FluentValidation;
@@ -17,13 +18,11 @@ namespace API.Extentions
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
-
             services.AddCors(opt=> {
                 opt.AddPolicy("CorsPolicy", policy=>{
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
                 });
             });
-
             services.AddMediatR(cfg =>cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddFluentValidationAutoValidation();

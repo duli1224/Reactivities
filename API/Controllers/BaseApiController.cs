@@ -1,7 +1,7 @@
+//base API controller extended in other files, manages errors in results
 using Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace API.Controllers
 {
