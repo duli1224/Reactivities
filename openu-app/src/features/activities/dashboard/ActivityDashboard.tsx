@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import ActivityFilters from './ActivityFilters';
 
-export default observer ( function ActivityDashboard(){
+export default observer (function ActivityDashboard(){
     const {activityStore} = useStore();
     const {loadActivities , activityRegistry } = activityStore;
     

@@ -8,30 +8,33 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccountController: ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly TokentService _tokentService;
         public AccountController(UserManager<AppUser> userManager, TokentService tokentService)
-        {   
+        {
             _tokentService = tokentService;
-            _userManager = userManager;   
+            _userManager = userManager;
         }
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
-            if(user == null) return Unauthorized();
+            if (user == null) return Unauthorized();
 
-            var result = await _userManager.CheckPasswordAsync(user , loginDto.Password);
-            if (result){
-                return new UserDto{
+            var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+            if (result)
+            {
+                return new UserDto
+                {
                     DisplayName = user.DislplayName,
                     Image = null,
                     Token = _tokentService.CreateToken(user),
@@ -46,15 +49,22 @@ namespace API.Controllers
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
-                return BadRequest("this Email is assosiated with an existing account");
+                ModelState.AddModelError("Email", "this Email is alredy in use");
+                return ValidationProblem();
             }
-            var user = new AppUser {
+            if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.UserName))
+            {
+                ModelState.AddModelError("UserName", "this userName is alredy in use");
+                return ValidationProblem();
+            }
+            var user = new AppUser
+            {
                 DislplayName = registerDto.DisplayName,
                 UserName = registerDto.UserName,
                 Email = registerDto.Email
             };
-            var result = await _userManager.CreateAsync(user , registerDto.Password);
-            if(result.Succeeded)
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
+            if (result.Succeeded)
             {
                 return CreatNewUser(user);
             }
@@ -67,7 +77,7 @@ namespace API.Controllers
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
             return CreatNewUser(user);
         }
-         private UserDto CreatNewUser(AppUser user)
+        private UserDto CreatNewUser(AppUser user)
         {
             return new UserDto
             {
