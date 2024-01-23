@@ -35,7 +35,7 @@ namespace API.Controllers
             {
                 return new UserDto
                 {
-                    DisplayName = user.DislplayName,
+                    DisplayName = user.DisplayName,
                     Image = null,
                     Token = _tokentService.CreateToken(user),
                     UserName = user.UserName
@@ -59,7 +59,7 @@ namespace API.Controllers
             }
             var user = new AppUser
             {
-                DislplayName = registerDto.DisplayName,
+                DisplayName = registerDto.DisplayName,
                 UserName = registerDto.UserName,
                 Email = registerDto.Email
             };
@@ -81,7 +81,7 @@ namespace API.Controllers
         {
             return new UserDto
             {
-                DisplayName = user.DislplayName,
+                DisplayName = user.DisplayName,
                 UserName = user.UserName,
                 Image = null,
                 Token = _tokentService.CreateToken(user)
