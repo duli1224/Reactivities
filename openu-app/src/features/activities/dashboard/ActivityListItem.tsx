@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
-import { Button, Icon, Item, Segment } from "semantic-ui-react";
+import { Button, Icon, Item, Label, Segment } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
 import { format } from "date-fns";
+import ActivityListItemAttendee from "./ActivityListItemAttendee";
 
 interface Props {
     activity: Activity
 }
 
 export default function ActivitiListItem({ activity }: Props) {
-    
+
     return (
         <Segment.Group>
             <Segment>
@@ -20,24 +21,39 @@ export default function ActivitiListItem({ activity }: Props) {
                                 {activity.title}
                             </Item.Header>
                             <Item.Description>
-                                Hosted by bob
+                                Hosted by {activity.host?.displayName}
                             </Item.Description>
+                            
+                            {activity.isHost && (
+                                <Item.Description>
+                                    <Label basic color='orange'>
+                                        This is your event
+                                    </Label>
+                                </Item.Description>
+                            )}
+                            {activity.isGoing && !activity.isHost && (
+                                <Item.Description>
+                                    <Label basic color='green'>
+                                        You are attending this event
+                                    </Label>
+                                </Item.Description>
+                            )}
                         </Item.Content>
                     </Item>
                 </Item.Group>
             </Segment>
             <Segment>
                 <span>
-                    <Icon name='clock'/> {format(activity.date! , 'dd MMM yyyy H:mm aa')}
-                    <Icon name='marker'/> {activity.venue}
+                    <Icon name='clock' /> {format(activity.date!, 'dd MMM yyyy H:mm aa')}
+                    <Icon name='marker' /> {activity.venue}
                 </span>
             </Segment>
             <Segment secondary>
-                attendees go here
+                <ActivityListItemAttendee attendees={activity.attendees!} />
             </Segment>
             <Segment clearing>
                 <span>{activity.description} </span>
-                <Button as={Link} to={`/activities/${activity.id}`} color='teal' floated='right' content = 'View' />  
+                <Button as={Link} to={`/activities/${activity.id}`} color='teal' floated='right' content='View' />
             </Segment>
         </Segment.Group>
     )
