@@ -33,19 +33,19 @@ namespace Application.Activities
                 if (activity == null) 
                     return null;
 
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _UserAccessor.GetUsername());
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _UserAccessor.GetUserName());
 
                 if (user == null)
                     return null;
 
-                var hotseUsername = activity.Attendees.FirstOrDefault(x => x.IsHost)?.AppUser?.UserName;
+                var hotseUserName = activity.Attendees.FirstOrDefault(x => x.IsHost)?.AppUser?.UserName;
 
                 var attendance = activity.Attendees.FirstOrDefault(x => x.AppUser.UserName == user.UserName);
 
-                if (attendance != null && hotseUsername == user.UserName)
+                if (attendance != null && hotseUserName == user.UserName)
                     activity.IsCancelled = !activity.IsCancelled;
 
-                if (attendance != null && hotseUsername != user.UserName)
+                if (attendance != null && hotseUserName != user.UserName)
                     activity.Attendees.Remove(attendance);
                 
                 if (attendance == null)

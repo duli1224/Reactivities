@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Activity } from "../../../app/models/activity";
+import { ActivityFormValues } from "../../../app/models/activity";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { v4 as uuid } from 'uuid';
 import { Form, Formik } from "formik";
@@ -17,20 +17,11 @@ import MyDateInput from "../../../app/common/form/MyDateInput";
 export default observer(function ActivityForm()
 {
     const {activityStore} = useStore();
-    const { updateActivity , createActivity , loading ,loadActivity, loadingInitial} = activityStore;
+    const { updateActivity , createActivity, loadActivity, loadingInitial} = activityStore;
     const {id} = useParams();
     const navigate = useNavigate();
 
-    const [activity , steActivity] = useState<Activity>( 
-    {
-        id:'',
-        title:'',
-        category:'',
-        description:'',
-        date: null,
-        city:'',
-        venue:''
-    });
+    const [activity , steActivity] = useState<ActivityFormValues>( new ActivityFormValues() );
 
     const ValidationSchema = Yup.object({
         title : Yup.string().required('The activity title is required'),
@@ -42,10 +33,10 @@ export default observer(function ActivityForm()
     })
 
     useEffect(() => {
-        if(id) loadActivity(id).then(activity => steActivity(activity!));
+        if(id) loadActivity(id).then(activity => steActivity(new ActivityFormValues(activity)));
     }, [id , loadActivity])
 
-    function handleFormSubmit(activity: Activity){
+    function handleFormSubmit(activity: ActivityFormValues){
         if (!activity.id) {
             activity.id = uuid();
             createActivity(activity).then(() => navigate(`/activities/${activity.id}`))
@@ -70,9 +61,10 @@ export default observer(function ActivityForm()
                     <Header content='Location Details' sub color='teal'/>
                     <MyTextInput placeholder = 'City' name ='city' />
                     <MyTextInput placeholder = 'Venue' name ='venue' />
-                    <Button loading={loading} floated="right" positive 
+                    <Button disabled={isSubmitting || !dirty || !isValid}
+                     loading={isSubmitting} floated="right" positive 
                      type='submit' content='Submit'
-                     disabled={isSubmitting || !dirty || !isValid}/>
+                     />
                     <Button as = {Link} to = '/activities' floated="right" type='button' content='Cancel'/>
                 </Form>
                 )}
