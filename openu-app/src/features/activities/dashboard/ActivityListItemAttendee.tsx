@@ -16,7 +16,6 @@ export default observer(function ActivityListItemAttendee({ attendees }: Props) 
                     trigger={<List.Item key={attendee.userName} as={Link} to={`/profiles/${attendee.userName}`}>
                         <Image size='mini' circular src={attendee.image || '/assets/user.png'} />
                     </List.Item>}>
-
                     <Popup.Content>
                         <ProfileCard profile={attendee} />
                     </Popup.Content>
