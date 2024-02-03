@@ -152,7 +152,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("createdDate")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
