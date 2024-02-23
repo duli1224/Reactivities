@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using Application.Activities;
 using Application.Comments;
 using AutoMapper;
@@ -12,8 +11,18 @@ namespace Application.Core
         {
             string currentUserName = null;
             CreateMap<Activity, Activity>();
+
+            CreateMap<Activity, Profiles.UserActivityDto>()
+            .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
+            .ForMember(d => d.Title, o => o.MapFrom(s => s.Title))
+            .ForMember(d => d.Category, o => o.MapFrom(s => s.Category))
+            .ForMember(d => d.Date, o => o.MapFrom(s => s.Date))
+            .ForMember(d => d.HostUserName, o => o.MapFrom(s =>s.Attendees
+            .FirstOrDefault(x =>x.IsHost).AppUser.UserName));
+
             CreateMap<Activity, ActivityDto>().ForMember(d => d.HostUserName, o => o.MapFrom(s => s.Attendees
             .FirstOrDefault(x => x.IsHost).AppUser.UserName));
+
             CreateMap<ActivityAttendee, AttendeeDto>()
             .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
             .ForMember(d => d.UserName, o => o.MapFrom(s => s.AppUser.UserName))
@@ -24,6 +33,7 @@ namespace Application.Core
             .ForMember(d => d.FollowingCount, o => o.MapFrom(s => s.AppUser.Followings.Count))
             .ForMember(d => d.Following, o => o.MapFrom(s => s.AppUser.Followers
             .Any(x => x.Observer.UserName == currentUserName)));
+
             CreateMap<AppUser, Profiles.Profile>()
             .ForMember(d => d.Image, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.isMain).Url))
             .ForMember(d => d.FollowersCount, o => o.MapFrom(s => s.Followers.Count))
