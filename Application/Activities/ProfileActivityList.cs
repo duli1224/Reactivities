@@ -37,9 +37,9 @@ namespace Application.Activities
 
                 query = request.Predicate switch
                 {
-                    "past" => query.Where(d => d.Date <= DateTime.Now),
                     "hosting" => query.Where(x => x.HostUserName == request.UserName),
-                    _ => query.Where(d => d.Date >= DateTime.Now)
+                    "future" => query.Where(d => d.Date >= DateTime.UtcNow),
+                    _ => query.Where(d => d.Date <= DateTime.UtcNow),
                 };
 
                 var activityList = await query.ToListAsync();
