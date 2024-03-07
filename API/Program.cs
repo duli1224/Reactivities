@@ -25,11 +25,25 @@ builder.Services.AddIdentityServices(builder.Configuration);
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseXContentTypeOptions();
+app.UseReferrerPolicy(opt => opt.NoReferrer());
+app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
+app.UseXfo(opt => opt.Deny());
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else {
+    app.Use(async(context, next) =>
+    {
+        context.Response.Headers.Add("Strict-Transport-Security", "max-age=31566000");
+        await next.Invoke();
+    });
 }
 
 app.UseCors("CorsPolicy");
