@@ -8,12 +8,16 @@ import { PagingParams } from '../../../app/models/pagination';
 import InfiniteScroll from 'react-infinite-scroller';
 import ActivityListItemPlaceholder from './ActivityListItemPlaceholder';
 
+interface Props {
+    vacationId: string;
+}
 
-export default observer(function ActivityDashboard() {
+export default observer(function ActivityDashboard({vacationId}: Props) {
     const { activityStore } = useStore();
-    const { loadActivities, activityRegistry, setPagingParams, pagination } = activityStore;
+    const { loadActivities, setSelectedVacationId, activityRegistry, setPagingParams, pagination } = activityStore;
     const [loadingNext, setLoadingNext] = useState(false);
-
+    setSelectedVacationId(vacationId);
+    
     function handelGetNext() {
         setLoadingNext(true);
         setPagingParams(new PagingParams(pagination!.currentPage + 1))

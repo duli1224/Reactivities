@@ -1,5 +1,6 @@
 using Application.Activities;
 using Application.Comments;
+using Application.Vacations;
 using AutoMapper;
 using Domain;
 
@@ -11,6 +12,7 @@ namespace Application.Core
         {
             string currentUserName = null;
             CreateMap<Activity, Activity>();
+            CreateMap<Vacation, Vacation>();
 
             CreateMap<Activity, Profiles.UserActivityDto>()
             .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
@@ -46,7 +48,14 @@ namespace Application.Core
             .ForMember(d => d.UserName, o => o.MapFrom(s => s.Author.UserName))
             .ForMember(d => d.Image, o => o.MapFrom(s => s.Author.Photos.FirstOrDefault(x => x.isMain).Url));
 
-
+            CreateMap<Vacation, VacationDto>()
+            .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
+            .ForMember(d => d.Title, o => o.MapFrom(s => s.Title))
+            .ForMember(d => d.StartDate, o => o.MapFrom(s => s.StartDate))
+            .ForMember(d => d.EndDate, o => o.MapFrom(s => s.EndDate))
+            .ForMember(d => d.Description, o => o.MapFrom(s => s.Description))
+            .ForMember(d => d.Location, o => o.MapFrom(s => s.Location))
+            .ForMember(d => d.HostUserName, o => o.MapFrom(s => s.HostUserName));
         }
     }
 }

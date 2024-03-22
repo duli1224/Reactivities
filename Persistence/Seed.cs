@@ -8,7 +8,7 @@ namespace Persistence
         public static async Task SeedData(DataContext context,
             UserManager<AppUser> userManager)
         {
-            if (!userManager.Users.Any() && !context.Activities.Any())
+            if (!userManager.Users.Any() && !context.Vacations.Any())
             {
                 var users = new List<AppUser>
                 {
@@ -250,8 +250,19 @@ namespace Persistence
                         }
                     }
                 };
+                var vacation = new Vacation
+                {
+                    Description = "aaaa",
+                    EndDate = DateTime.UtcNow.AddMonths(7),
+                    StartDate = DateTime.UtcNow.AddMonths(7),
+                    Title = "titles",
+                    Location = "Israel",
+                    HostUserName = "host",
+                    Activities = activities
+                };
 
-                await context.Activities.AddRangeAsync(activities);
+                await context.Vacations.AddAsync(vacation);
+                //await context.Activities.AddRangeAsync(activities);
                 await context.SaveChangesAsync();
             }
         }

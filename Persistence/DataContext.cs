@@ -19,6 +19,7 @@ namespace Persistence
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<UserFollowing> UserFollowings { get; set; }
+        public DbSet<Vacation> Vacations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -55,6 +56,11 @@ namespace Persistence
                 .HasForeignKey(o => o.TargetId)
                 .OnDelete(DeleteBehavior.Cascade);
             });
+
+            builder.Entity<Vacation>()
+            .HasMany(v => v.Activities)
+            .WithOne(a => a.Vacation)
+            .HasForeignKey(a => a.VacationId);
         }
     }
 }

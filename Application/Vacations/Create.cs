@@ -5,20 +5,20 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-namespace Application.Activities
+
+namespace Application.Vacations
 {
     public class Create
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Activity Activity { get; set; }
-            public Guid VacationId { get; set; }
+            public Vacation Vacation { get; set; }
         }
         public class CommandValidatior : AbstractValidator<Command>
         {
             public CommandValidatior()
             {
-                RuleFor(x => x.Activity).SetValidator(new ActivityValidator());
+                RuleFor(x => x.Vacation).SetValidator(new VacationValidator());
             }
         }
         public class Handler : IRequestHandler<Command, Result<Unit>>
@@ -33,19 +33,15 @@ namespace Application.Activities
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUserName());
-                var attendee = new ActivityAttendee{
-                    AppUser = user,
-                    Activity = request.Activity,
-                    IsHost = true
-                };
-                request.Activity.Attendees.Add(attendee);
-                request.Activity.VacationId = request.VacationId;
+                if (user != null)
+                {
+                    request.Vacation.HostUserName = user.UserName;
+                }
+                _context.Vacations.Add(request.Vacation);
 
-                _context.Activities.Add(request.Activity);
-                
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Failed to create an activity");
+                if (!result) return Result<Unit>.Failure("Failed to create a vacation");
 
                 return Result<Unit>.Success(Unit.Value);
             }

@@ -6,6 +6,7 @@ import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 import { Photo, Profile, UserActivity } from "../models/profile";
 import { PaginationResult } from "../models/pagination";
+import { Vacation, VacationFormValues } from "../models/vacation";
 
 const sleep = (delay: number) =>{
     return new Promise((resolve)=>{
@@ -86,8 +87,8 @@ const Activities = {
 
 const Account = {
     currentUser: () => requests.get<User>('/account'),
-    login: (user : UserFormValues) => requests.post<User>('/account/login' , user),
-    register: (user : UserFormValues) => requests.post<User>('/account/register',user)
+    login: (user : UserFormValues) => requests.post<User>('/account/login', user),
+    register: (user : UserFormValues) => requests.post<User>('/account/register', user)
 }
 
 const Profiles = {
@@ -108,10 +109,19 @@ const Profiles = {
         requests.get<UserActivity[]>(`/profiles/${userName}/activities?predicate=${predicate}`)
 }
 
+const Vacations = {
+    list: () => requests.get<Vacation[]>(`/vacations`),
+    details: (id : string) => requests.get<Vacation>(`/vacations/${id}`),
+    create: (vacation: VacationFormValues) => requests.post<void>('/vacations', vacation),
+    update: (vacation: VacationFormValues) => requests.put<void>(`/vacations/${vacation.id}`,vacation),
+    delete: (id : string) => requests.delete<void>(`/vacations/${id}`),
+}
+
 const agent = {
     Activities,
     Account,
-    Profiles
+    Profiles,
+    Vacations
 }
 
 export default agent;

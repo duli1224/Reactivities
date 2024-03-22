@@ -1,5 +1,4 @@
 using Application.Activities;
-using Application.Core;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,7 @@ namespace API.Controllers
     public class ActivitiesController: BaseApiController
     {
        
-        [HttpGet] // get a list of all activitties
+        [HttpGet] //get spesific activity based on id
         public async Task<ActionResult<List<Activity>>> GetActivities([FromQuery]ActivityParams param)
         {
             return HandlePagedResult(await Mediator.Send(new List.Query{Params = param}));
@@ -41,7 +40,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Delete.Command{Id = id}));
         }
 
-        [HttpPost("{id}/attend")] // updates the users attendence ov the activity, makes it the oposit
+        [HttpPost("{id}/attend")] // updates the users attendence of the activity, makes it the oposit
         public async Task<IActionResult> Attend(Guid id)
         {
             return HandleResult(await Mediator.Send(new UpdateAttendance.Command{Id = id}));

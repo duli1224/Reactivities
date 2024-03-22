@@ -9,6 +9,7 @@ import { Pagination, PagingParams } from "../models/pagination";
 export default class ActivityStore {
     activityRegistry = new Map<string, Activity>();
     selectedActivity: Activity | undefined = undefined;
+    selectedVacationId: string | undefined = undefined;
     editMode = false;
     loading = false;
     loadingInitial = false;
@@ -31,6 +32,10 @@ export default class ActivityStore {
 
     setPagingParams = (pagingParams: PagingParams) => {
         this.pagingParams = pagingParams;
+    }
+
+    setSelectedVacationId = (selectedVacationId : string) => {
+        this.selectedVacationId = selectedVacationId;
     }
 
     setPredicate = (predicate: string, value: string | Date) =>
@@ -65,6 +70,7 @@ export default class ActivityStore {
         const params = new URLSearchParams();
         params.append('pageNumber', this.pagingParams.pageNumber.toString());
         params.append('pageSize', this.pagingParams.pageSize.toString());
+        params.append('vacationId', this.selectedVacationId?.toString()!);
         this.predicate.forEach((value, key) => {
             if(key === 'startDate') 
             {

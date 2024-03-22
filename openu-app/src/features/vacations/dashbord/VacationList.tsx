@@ -1,22 +1,21 @@
 import { Header} from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
-import ActivitiListItem from './ActivityListItem';
 import { Fragment } from 'react';
+import VacationListItem from './VacationListItem';
 
-
-export default observer(function ActivityList() {
-    const { activityStore } = useStore();
-    const { GrupedActivities } = activityStore;
+export default observer(function VacationList() {
+    const { vacationStore } = useStore();
+    const { GrupedVacations } = vacationStore;
     return (
         <>
-            {GrupedActivities.map(([group, activities]) => (
+            {GrupedVacations.map(([group, vacations]) => (
                 <Fragment key={group}>
                     <Header sub color='teal'>
                         {group}
                     </Header>
-                            {activities.map(activity => (
-                                <ActivitiListItem key={activity.id} activity={activity} />
+                            {vacations.map(vacation => (
+                                <VacationListItem key={vacation.id} vacation={vacation} />
                             ))}
                 </Fragment>
             ))}

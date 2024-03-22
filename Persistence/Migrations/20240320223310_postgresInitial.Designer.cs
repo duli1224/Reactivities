@@ -12,8 +12,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240223233008_PostgresInitial")]
-    partial class PostgresInitial
+    [Migration("20240320223310_postgresInitial")]
+    partial class postgresInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,10 +49,15 @@ namespace Persistence.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("VacationId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Venue")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("VacationId");
 
                     b.ToTable("Activities");
                 });
@@ -210,6 +215,35 @@ namespace Persistence.Migrations
                     b.ToTable("UserFollowings");
                 });
 
+            modelBuilder.Entity("Domain.Vacation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("HostUserName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vacations");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -342,6 +376,15 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Activity", b =>
+                {
+                    b.HasOne("Domain.Vacation", "Vacation")
+                        .WithMany("Activities")
+                        .HasForeignKey("VacationId");
+
+                    b.Navigation("Vacation");
+                });
+
             modelBuilder.Entity("Domain.ActivityAttendee", b =>
                 {
                     b.HasOne("Domain.Activity", "Activity")
@@ -470,6 +513,11 @@ namespace Persistence.Migrations
                     b.Navigation("Followings");
 
                     b.Navigation("Photos");
+                });
+
+            modelBuilder.Entity("Domain.Vacation", b =>
+                {
+                    b.Navigation("Activities");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,8 +17,8 @@ export default observer(function HomePage() {
                 {userStore.isLoggedIn ? (
                     <>
                         <Header as='h2' inverted content='welcom to reactivities' />
-                        <Button as={Link} to='/activities' size='huge' inverted>
-                            Go to activities!
+                        <Button as={Link} to='/vacations' size='huge' inverted>
+                            Go to vacations!
                         </Button>
                     </>
                 )
