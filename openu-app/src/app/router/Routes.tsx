@@ -1,6 +1,7 @@
 import { Navigate, RouteObject, createBrowserRouter } from "react-router-dom";
 import App from "../layout/App";
 import ActivityForm from "../../features/activities/form/ActivityForm";
+import VacationForm from "../../features/vacations/VacationForm";
 import ActivityDetails from "../../features/activities/details/ActivityDetails";
 import TestErrors from "../../features/errors/TestError";
 import NotFound from "../../features/errors/NotFound";
@@ -19,6 +20,8 @@ export const routes: RouteObject[] = [
                     { path: 'activities/:id', element: <ActivityDetails /> },
                     { path: 'vacations', element: <VacationDashbord /> },
                     { path: 'vacations/:id', element: <VacationDetails/> },
+                    { path: 'createVacation', element: <VacationForm key='creat' /> },
+                    { path: 'manageVacation/:id', element: <VacationForm key='manage' /> },
                     { path: 'createActivity', element: <ActivityForm key='creat' /> },
                     { path: 'manage/:id', element: <ActivityForm key='manage' /> },
                     { path: 'profiles/:userName', element: <ProfilePage key='manage' /> },

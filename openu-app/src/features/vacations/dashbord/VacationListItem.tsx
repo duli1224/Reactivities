@@ -14,13 +14,12 @@ export default function VacationListItem({ vacation }: Props) {
             <Segment>
                 <Item.Group>
                     <Item>
-                        <Item.Image style={{marginBottom: 5}} size='tiny' circular src={vacation.host?.image || '/assets/user.png'} />
                         <Item.Content>
                             <Item.Header as={Link} to={`/vacation/${vacation.id}`}>
                                 {vacation.title}
                             </Item.Header>
                             <Item.Description>
-                                Hosted by <Link to = {`/profiles/${vacation.hostUserName}`}>{vacation.host?.displayName}</Link>
+                                Hosted by <Link to = {`/profiles/${vacation.hostUserName}`}>{vacation.hostUserName}</Link>
                             </Item.Description>     
                             {vacation.isHost && (
                                 <Item.Description>

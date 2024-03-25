@@ -39,9 +39,9 @@ export default observer(function ActivityForm()
     function handleFormSubmit(activity: ActivityFormValues){
         if (!activity.id) {
             activity.id = uuid();
-            createActivity(activity).then(() => navigate(`/activities/${activity.id}`))
+            createActivity(activity).then(() => navigate(`/vacations/${activity.vacationId}`))
         }else{
-            updateActivity(activity).then(() => navigate(`/activities/${activity.id}`))
+            updateActivity(activity).then(() => navigate(`/vacations/${activity.vacationId}`))
         }
         
     }
@@ -65,7 +65,7 @@ export default observer(function ActivityForm()
                      loading={isSubmitting} floated="right" positive 
                      type='submit' content='Submit'
                      />
-                    <Button as = {Link} to = '/activities' floated="right" type='button' content='Cancel'/>
+                    <Button as = {Link} to = '/vacations' floated="right" type='button' content='Cancel'/>
                 </Form>
                 )}
             </Formik>

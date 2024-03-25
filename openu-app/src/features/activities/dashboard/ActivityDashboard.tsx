@@ -1,9 +1,8 @@
-import { Grid, GridColumn, Loader } from 'semantic-ui-react';
+import { Segment, Loader } from 'semantic-ui-react';
 import ActivityList from './ActivityList';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-import ActivityFilters from './ActivityFilters';
 import { PagingParams } from '../../../app/models/pagination';
 import InfiniteScroll from 'react-infinite-scroller';
 import ActivityListItemPlaceholder from './ActivityListItemPlaceholder';
@@ -12,12 +11,12 @@ interface Props {
     vacationId: string;
 }
 
-export default observer(function ActivityDashboard({vacationId}: Props) {
+export default observer(function ActivityDashboard({ vacationId }: Props) {
     const { activityStore } = useStore();
     const { loadActivities, setSelectedVacationId, activityRegistry, setPagingParams, pagination } = activityStore;
     const [loadingNext, setLoadingNext] = useState(false);
     setSelectedVacationId(vacationId);
-    
+
     function handelGetNext() {
         setLoadingNext(true);
         setPagingParams(new PagingParams(pagination!.currentPage + 1))
@@ -29,8 +28,8 @@ export default observer(function ActivityDashboard({vacationId}: Props) {
     }, [loadActivities, activityRegistry.size])
 
     return (
-        <Grid>
-            <Grid.Column width='10'>
+        <Segment.Group>
+            <Segment>
                 {activityStore.loadingInitial && activityRegistry.size === 0 && !loadingNext ? (
                     <>
                         <ActivityListItemPlaceholder />
@@ -38,20 +37,19 @@ export default observer(function ActivityDashboard({vacationId}: Props) {
                         <ActivityListItemPlaceholder />
                     </>
                 ) : (
-                    <InfiniteScroll pageStart={0}
+                    <InfiniteScroll
+                        pageStart={0}
                         loadMore={handelGetNext}
                         hasMore={!loadingNext && !!pagination && pagination?.currentPage < pagination?.totalPages}
                         initialLoad={false}>
                         <ActivityList />
                     </InfiniteScroll>
                 )}
-            </Grid.Column>
-            <GridColumn width='6'>
-                <ActivityFilters />
-            </GridColumn>
-            <Grid.Column width={10}>
+            </Segment>
+
+            <Segment>
                 <Loader active={loadingNext} />
-            </Grid.Column>
-        </Grid>
+            </Segment>
+        </Segment.Group>
     )
 })

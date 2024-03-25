@@ -47,7 +47,7 @@ export default observer(function VacationDetailedHeader({ vacation }: Props) {
                                 <p><strong>Departing:</strong> {format(vacation.startDate!, 'dd MMM yyyy')}</p>
                                 <p><strong>Returning:</strong> {format(vacation.endDate!, 'dd MMM yyyy')}</p>
                                 <p>
-                                    Hosted by <strong><Link to={`/profiles/${vacation.host?.userName}`}>{vacation.host?.displayName}</Link></strong>
+                                    Hosted by <strong><Link to={`/profiles/${vacation.hostUserName}`}>{vacation.hostUserName}</Link></strong>
                                 </p>
                             </Item.Content>
                         </Item>
@@ -57,11 +57,12 @@ export default observer(function VacationDetailedHeader({ vacation }: Props) {
             <Segment clearing attached='bottom'>
                 {vacation.isHost && (
                     <>
-                        <Button as={Link} to={`/manage/${vacation.id}`} color='orange' floated='right'>
-                            Manage Event
-                        </Button>
+                        <Button as={Link} to={`/manageVacation/${vacation.id}`} color='orange' floated='right'>
+                            Manage Vacation
+                        </Button>    
                     </>
                 )}
+                <Button as={Link} to='/createActivity' positive content='Create Activity' floated='left' />
             </Segment>
         </Segment.Group>
     )

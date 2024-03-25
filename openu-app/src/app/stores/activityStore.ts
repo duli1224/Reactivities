@@ -159,6 +159,7 @@ export default class ActivityStore {
 
     createActivity = async (activity: ActivityFormValues) => {
         const user = store.userStore.user;
+        activity.vacationId = this.selectedVacationId!.toString();
         const attendee = new Profile(user!);
         try {
             await agent.Activities.create(activity);

@@ -1,4 +1,5 @@
 import { Profile } from "./profile";
+import { Vacation } from "./vacation";
 
 export interface IActivity {
     id: string;
@@ -14,6 +15,7 @@ export interface IActivity {
     isCancelled?: boolean; 
     isHost: boolean;
     isGoing: boolean;
+    vacationId : string;
   }
   export class Activity implements Activity {
     constructor (init: ActivityFormValues){
@@ -24,6 +26,7 @@ export interface IActivity {
       this.description = init.description
       this.venue = init.venue
       this.title = init.title
+      this.vacationId = init.vacationId
     }
 
     id: string;
@@ -39,6 +42,7 @@ export interface IActivity {
     isCancelled: boolean = false; 
     isHost: boolean = false;
     isGoing: boolean = false;
+    vacationId: String;
   }
 
   export class ActivityFormValues {
@@ -49,6 +53,7 @@ export interface IActivity {
     date: Date | null = null;
     city: string = '';
     venue: string = '';
+    vacationId: String= '';
 
     constructor(activity?: ActivityFormValues){
      if (activity) 
@@ -60,6 +65,7 @@ export interface IActivity {
         this.description = activity.description;
         this.venue = activity.venue;
         this.date = activity.date;
+        this.vacationId = activity.vacationId;
      } 
     }
   }

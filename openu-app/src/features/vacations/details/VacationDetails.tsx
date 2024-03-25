@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import VacationDetailedHeader from "./VacationDetailedHeader";
 import VacationDescriptionDetails from "./VacationDescriptionDetails";
 import ActivityDashboard from "../../activities/dashboard/ActivityDashboard";
+import ActivityFilters from "../../activities/dashboard/ActivityFilters";
 
 export default observer (function ActivityDetails() {
     const {vacationStore} = useStore();
@@ -20,12 +21,15 @@ export default observer (function ActivityDetails() {
     if(loadingInitial || !vacation) return <LoadingComponent content={""}/>;
 
     return(
-        <Grid>
-            <Grid.Column width={10}>
+        <Grid columns={2} stackable>
+            <Grid.Column width='10'>
                 <VacationDetailedHeader vacation = {vacation}/>
                 <VacationDescriptionDetails vacation = {vacation}/>
                 <ActivityDashboard vacationId = {vacation.id}/>
             </Grid.Column>  
+            <Grid.Column width='6'>
+                <ActivityFilters />
+            </Grid.Column>
         </Grid>
     )
 })

@@ -13,19 +13,19 @@ export default function ActivitiListItem({ activity }: Props) {
     return (
         <Segment.Group>
             <Segment>
-                {activity.isCancelled && 
-                    <Label attached='top' color='red' content= 'Cancelled :(' style= {{textAlign: 'center'}} />}
+                {activity.isCancelled &&
+                    <Label attached='top' color='red' content='Cancelled :(' style={{ textAlign: 'center' }} />}
                 <Item.Group>
                     <Item>
-                        <Item.Image style={{marginBottom: 5}} size='tiny' circular src={activity.host?.image || '/assets/user.png'} />
+                        <Item.Image style={{ marginBottom: 5 }} size='tiny' circular src={activity.host?.image || '/assets/user.png'} />
                         <Item.Content>
                             <Item.Header as={Link} to={`/activities/${activity.id}`}>
                                 {activity.title}
                             </Item.Header>
                             <Item.Description>
-                                Hosted by <Link to = {`/profiles/${activity.hostUserName}`}>{activity.host?.displayName}</Link>
+                                Hosted by <Link to={`/profiles/${activity.hostUserName}`}>{activity.host?.displayName}</Link>
                             </Item.Description>
-                            
+
                             {activity.isHost && (
                                 <Item.Description>
                                     <Label basic color='orange'>
@@ -45,10 +45,10 @@ export default function ActivitiListItem({ activity }: Props) {
                 </Item.Group>
             </Segment>
             <Segment>
-                <span>
-                    <Icon name='clock' /> {format(activity.date!, 'dd MMM yyyy H:mm aa ')}
-                    <Icon name='marker' /> {activity.venue}
-                </span>
+                <Icon name='clock' /> {format(activity.date!, 'dd MMM yyyy H:mm aa ')}
+            </Segment>
+            <Segment>
+                <Icon name='marker' /> {activity.venue}
             </Segment>
             <Segment secondary>
                 <ActivityListItemAttendee attendees={activity.attendees!} />

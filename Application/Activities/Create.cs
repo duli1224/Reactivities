@@ -12,7 +12,7 @@ namespace Application.Activities
         public class Command : IRequest<Result<Unit>>
         {
             public Activity Activity { get; set; }
-            public Guid VacationId { get; set; }
+        
         }
         public class CommandValidatior : AbstractValidator<Command>
         {
@@ -39,7 +39,6 @@ namespace Application.Activities
                     IsHost = true
                 };
                 request.Activity.Attendees.Add(attendee);
-                request.Activity.VacationId = request.VacationId;
 
                 _context.Activities.Add(request.Activity);
                 

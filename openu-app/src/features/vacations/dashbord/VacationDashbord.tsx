@@ -24,6 +24,7 @@ export default observer(function ActivityDashboard() {
                         <VacationListItemPlaceholder />
                     </>
                 ) : (      
+                        
                         <VacationList/>
                 )}
             </Grid.Column>
