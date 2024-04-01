@@ -8,6 +8,7 @@ interface Props {
 }
 
 export default function VacationListItem({ vacation }: Props) {
+    
 
     return (
         <Segment.Group>

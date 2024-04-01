@@ -16,6 +16,7 @@ export default class ActivityStore {
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
     predicate = new Map().set('all', true);
+    allAttendees: Profile[] = []; 
 
     constructor() {
         makeAutoObservable(this)
@@ -104,6 +105,7 @@ export default class ActivityStore {
             runInAction(() => {
                 result.data.forEach(activity => {
                     this.setActivity(activity);
+                    this.updateAllAttendees(activity); 
                 })
                 this.setPagination(result.pagination);
                 this.setLoadingInitial(false);
@@ -112,6 +114,15 @@ export default class ActivityStore {
             console.log(error);
             this.setLoadingInitial(false);
         }
+    }
+
+    updateAllAttendees = (activity: Activity) => {
+        activity.attendees?.forEach(attendee => {
+            const existingAttendee = this.allAttendees.find(a => a.userName === attendee.userName);
+            if (!existingAttendee) {
+                this.allAttendees.push(attendee);
+            }
+        });
     }
 
     loadActivity = async (id: string) => {

@@ -11,12 +11,11 @@ export default observer(function HomePage() {
         <Segment inverted textAlign='center' vertical className='masthead'>
             <Container text>
                 <Header as='h1' inverted>
-                    <Image size='massive' src='/assets/logo.png' alt='logo' style={{ margineBottom: 12 }} />
-                    Bon Voyage!
+                    Bon Voyage!<Image size='massive' src='/assets/logo2.png' alt='logo' style={{ margineBottom: 12 }} />    
                 </Header>
                 {userStore.isLoggedIn ? (
                     <>
-                        <Header as='h2' inverted content='welcom to reactivities' />
+                        <Header as='h2' inverted content='Plan your dream vacation' />
                         <Button as={Link} to='/vacations' size='huge' inverted>
                             Go to vacations!
                         </Button>

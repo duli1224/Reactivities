@@ -1,5 +1,4 @@
 import { Profile } from "./profile";
-import { Vacation } from "./vacation";
 
 export interface IActivity {
     id: string;

@@ -1,4 +1,3 @@
-using System.IO.Compression;
 using Application.Core;
 using Application.Interfaces;
 using Domain;

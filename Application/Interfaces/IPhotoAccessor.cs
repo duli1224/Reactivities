@@ -1,6 +1,5 @@
 using Application.Photos;
 using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {

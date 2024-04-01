@@ -9,11 +9,10 @@ export default observer(function NavBar() {
         <Menu inverted fixed='top'>
             <Container>
                 <Menu.Item as={NavLink} to='/' header>
-                    <img src='/assets/logo.png' alt='logo' style={{ marginRight: '10px' }} />
-                    Reactivities
+                    <img sizes='massive' src='/assets/logo2.png' alt='logo' style={{ marginRight: '10px' }} />
+                    Bon Voyage!
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/vacations' name='Vacations' />
-                <Menu.Item as={NavLink} to='/errors' name='Errors' />
                 <Menu.Item>
                     <Button as={NavLink} to='/createVacation' positive content='Create Vacation' />
                 </Menu.Item>

@@ -252,10 +252,10 @@ namespace Persistence
                 };
                 var vacation = new Vacation
                 {
-                    Description = "aaaa",
+                    Description = "example description",
                     EndDate = DateTime.UtcNow.AddMonths(7),
                     StartDate = DateTime.UtcNow.AddMonths(7),
-                    Title = "titles",
+                    Title = "example",
                     Location = "Israel",
                     HostUserName = "host",
                     Activities = activities
