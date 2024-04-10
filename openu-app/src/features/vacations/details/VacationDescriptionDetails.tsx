@@ -13,7 +13,6 @@ export default observer(function VacationDetailedHeader({ vacation }: Props) {
     const { activityStore } = useStore();
     const { allAttendees} = activityStore;
     const formatDateRange = (startDate: Date, endDate: Date) => {
-        console.log(startDate, endDate)
         const formattedStartDate = format(startDate, 'dd MMM');
         const formattedEndDate = format(endDate, 'dd MMM');
         return `${formattedStartDate} - ${formattedEndDate}`;

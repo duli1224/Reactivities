@@ -11,6 +11,8 @@ import * as Yup from 'yup';
 import MyTextInput from "../../app/common/form/MyTextInput";
 import MyTextArea from "../../app/common/form/MyTexeArea";
 import MyDateInput from "../../app/common/form/MyDateInput";
+import { vacationCategotyOptions } from "../../app/common/options/vacationCategoryOptions";
+import MySelectInput from "../../app/common/form/MySelectInput";
 
 export default observer(function VacationForm()
 {
@@ -24,6 +26,7 @@ export default observer(function VacationForm()
     const ValidationSchema = Yup.object({
         title : Yup.string().required('The vacation title is required'),
         description : Yup.string().required('The vacation description is required'),
+        category : Yup.string().required('The activity categoty is required'),
         startDate : Yup.string().required('The vacation start date is required'),
         endDate : Yup.string().required('The vacation end date is required'),
         location : Yup.string().required('The vacation location is required'),
@@ -52,6 +55,7 @@ export default observer(function VacationForm()
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete= 'off'>
                     <MyTextInput placeholder ='Title' name='title'/>
                     <MyTextArea rows={3} placeholder = 'Description' name ='description' />
+                    <MySelectInput options={vacationCategotyOptions} placeholder = 'Category' name ='category' />
                     <MyDateInput placeholderText = 'Departing'  name ='startDate' showTimeSelect
                     timeCaption='time' dateFormat='MMM d, yyy h:mm aa' />
                     <MyDateInput placeholderText = 'Returning'  name ='endDate' showTimeSelect

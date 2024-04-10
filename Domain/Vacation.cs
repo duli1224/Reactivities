@@ -7,8 +7,10 @@ namespace Domain
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Description { get; set; }
+        public string Category { get; set; }
         public string Location { get; set; }
         public ICollection<Activity> Activities {get; set;} = new List<Activity>();
         public string HostUserName { get; set; }
+        public AppUser Host { get; set; }
     }
 }

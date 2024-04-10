@@ -37,6 +37,8 @@ namespace Application.Vacations
                 {
                     request.Vacation.HostUserName = user.UserName;
                 }
+                
+                request.Vacation.Host = user;
                 _context.Vacations.Add(request.Vacation);
 
                 var result = await _context.SaveChangesAsync() > 0;

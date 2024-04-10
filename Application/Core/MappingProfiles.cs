@@ -48,14 +48,23 @@ namespace Application.Core
             .ForMember(d => d.UserName, o => o.MapFrom(s => s.Author.UserName))
             .ForMember(d => d.Image, o => o.MapFrom(s => s.Author.Photos.FirstOrDefault(x => x.isMain).Url));
 
+            CreateMap<AppUser, HostDto>()
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+            .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.DisplayName))
+            .ForMember(dest => dest.Bio, opt => opt.MapFrom(src => src.Bio))
+            .ForMember(d => d.Image, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.isMain)
+            .Url));
+
             CreateMap<Vacation, VacationDto>()
             .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
             .ForMember(d => d.Title, o => o.MapFrom(s => s.Title))
             .ForMember(d => d.StartDate, o => o.MapFrom(s => s.StartDate))
             .ForMember(d => d.EndDate, o => o.MapFrom(s => s.EndDate))
             .ForMember(d => d.Description, o => o.MapFrom(s => s.Description))
+            .ForMember(d => d.Category, o => o.MapFrom(s => s.Category))
             .ForMember(d => d.Location, o => o.MapFrom(s => s.Location))
-            .ForMember(d => d.HostUserName, o => o.MapFrom(s => s.HostUserName));
+            .ForMember(d => d.HostUserName, o => o.MapFrom(s => s.HostUserName))
+            .ForMember(d => d.Host, o => o.MapFrom(s => s.Host));
         }
     }
 }

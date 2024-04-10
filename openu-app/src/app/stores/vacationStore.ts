@@ -3,6 +3,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { store } from "./store";
 import { Vacation, VacationFormValues } from "../models/vacation";
 import agent from "../api/agent";
+import { Profile } from "../models/profile";
 
 export default class VacationStore {
     vacationRegistry = new Map<string, Vacation>();
@@ -35,9 +36,12 @@ export default class VacationStore {
     }
 
     private setVacation = (vacation: Vacation) => {
-
-        vacation.startDate = new Date(vacation.startDate!);
-        vacation.endDate = new Date(vacation.endDate!);
+        const user = store.userStore.user;
+        if (user) {
+            vacation.startDate = new Date(vacation.startDate!);
+            vacation.endDate = new Date(vacation.endDate!);
+            vacation.isHost = vacation.hostUserName === user.userName;      
+        }
         this.vacationRegistry.set(vacation.id, vacation);
     }
 
@@ -59,7 +63,6 @@ export default class VacationStore {
 
     loadVacation = async (id: string) => {
         let vacation = this.getVacation(id);
-        console.log(vacation)
         if (vacation) {
             this.selectedVacation = vacation;
             return vacation;
@@ -69,6 +72,7 @@ export default class VacationStore {
             try {
                 vacation = await agent.Vacations.details(id);
                 this.setVacation(vacation);
+                console.log(vacation.category);
                 runInAction(() => this.selectedVacation = vacation);
                 this.setLoadingInitial(false);
                 return vacation;
@@ -89,6 +93,7 @@ export default class VacationStore {
             await agent.Vacations.create(vacation);
             const newVacation = new Vacation(vacation);
             newVacation.hostUserName = user!.userName;
+            newVacation.host = new Profile(user!);
             this.setVacation(newVacation);
             runInAction(() => {
                 this.selectedVacation = newVacation;
@@ -111,7 +116,7 @@ export default class VacationStore {
             })
         } catch (error) {
             console.log(error);
-        } finally{
+        } finally {
             this.loading = false;
         }
     }

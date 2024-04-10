@@ -15,7 +15,7 @@ export default observer( function ProfileContent({profile}: Props)
     const {profileStore} = useStore();
     const panes = [
         {menuItem: 'About', render: () => <Tab.Pane>About Content</Tab.Pane>},
-        {menuItem: 'Phtos', render: () => <ProfilePhotos profile={profile}/>},
+        {menuItem: 'Photos', render: () => <ProfilePhotos profile={profile}/>},
         {menuItem: 'Events', render: () => <ProfileActivityList/>},
         {menuItem: 'Followers', render: () => <ProfileFollowings/>},
         {menuItem: 'Following', render: () => <ProfileFollowings/> },

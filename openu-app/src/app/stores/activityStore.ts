@@ -171,6 +171,7 @@ export default class ActivityStore {
     createActivity = async (activity: ActivityFormValues) => {
         const user = store.userStore.user;
         activity.vacationId = this.selectedVacationId!.toString();
+        console.log(activity.vacationId);
         const attendee = new Profile(user!);
         try {
             await agent.Activities.create(activity);
@@ -194,10 +195,14 @@ export default class ActivityStore {
                     let updatedActivity = { ...this.getActivity(activity.id), ...activity }
                     this.activityRegistry.set(activity.id, updatedActivity as Activity);
                     this.selectedActivity = updatedActivity as Activity;
+                    this.loading = false;
                 }
             })
         } catch (error) {
             console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
         }
     }
 

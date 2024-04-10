@@ -7,6 +7,7 @@ export interface IVacation {
     startDate: Date | null;
     endDate: Date | null;
     description: string;
+    category: string;
     location: string;
     hostUserName?: string;
     isHost: boolean;
@@ -16,11 +17,11 @@ export interface IVacation {
 
 export class Vacation implements Vacation {
     constructor(init: VacationFormValues) {
-        console.log('1', init)
         this.id = init.id!
         this.startDate = init.startDate
         this.endDate = init.endDate
         this.description = init.description
+        this.category = init.category
         this.title = init.title
         this.location = init.location;
         this.activities = init.activities;
@@ -31,6 +32,7 @@ export class Vacation implements Vacation {
     startDate: Date | null;
     endDate: Date | null;
     description: string;
+    category: string;
     location: string;
     hostUserName: string = '';
     host?: Profile;
@@ -43,18 +45,19 @@ export class VacationFormValues {
     id?: string = undefined;
     title: string = '';
     description: string = '';
+    category: string = '';
     location: string = '';
     startDate: Date | null = null;
     endDate: Date | null = null;
     activities : Activity[] = [];
 
     constructor(Vacation?: VacationFormValues) {
-        console.log('2', Vacation)
 
         if (Vacation) {
             this.id = Vacation.id;
             this.title = Vacation.title;
             this.description = Vacation.description;
+            this.category = Vacation.category;
             this.location = Vacation.location;
             this.startDate = Vacation.startDate;
             this.endDate = Vacation.endDate;

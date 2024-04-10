@@ -4,15 +4,6 @@ import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { Vacation } from '../../../app/models/vacation';
 
-const images = ["airBaloons.jpg", "beach.jpg", "rollercoster.jfif", "Skiing.png", "sunset.jfif"]
-
-const getRandomIndex = (max: number) => Math.floor(Math.random() * max)
-
-const chooseRandomImage = () => {
-    const randomIndex = getRandomIndex(images.length);
-    return images[randomIndex];
-};
-
 const vacationImageStyle = {
     filter: 'brightness(30%)'
 };
@@ -34,7 +25,7 @@ export default observer(function VacationDetailedHeader({ vacation }: Props) {
     return (
         <Segment.Group>
             <Segment basic attached='top' style={{ padding: '0' }}>
-                <Image src={`/assets/vacationImages/${chooseRandomImage()}`} fluid style={vacationImageStyle} />
+                <Image src={`/assets/vacationImages/${vacation.category}.jpg`} fluid style={vacationImageStyle} />
                 <Segment style={vacationImageTextStyle} basic>
                     <Item.Group>
                         <Item>
@@ -47,7 +38,7 @@ export default observer(function VacationDetailedHeader({ vacation }: Props) {
                                 <p><strong>Departing:</strong> {format(vacation.startDate!, 'dd MMM yyyy')}</p>
                                 <p><strong>Returning:</strong> {format(vacation.endDate!, 'dd MMM yyyy')}</p>
                                 <p>
-                                    Hosted by <strong><Link to={`/profiles/${vacation.hostUserName}`}>{vacation.hostUserName}</Link></strong>
+                                    Hosted by <strong><Link to={`/profiles/${vacation.host?.userName}`}>{vacation.host?.userName}</Link></strong>
                                 </p>
                             </Item.Content>
                         </Item>

@@ -12,7 +12,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240401190546_postgresInitial")]
+    [Migration("20240409211549_postgresInitial")]
     partial class postgresInitial
     {
         /// <inheritdoc />
@@ -221,11 +221,17 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Category")
+                        .HasColumnType("text");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("HostId")
+                        .HasColumnType("text");
 
                     b.Property<string>("HostUserName")
                         .HasColumnType("text");
@@ -240,6 +246,8 @@ namespace Persistence.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HostId");
 
                     b.ToTable("Vacations");
                 });
@@ -444,6 +452,15 @@ namespace Persistence.Migrations
                     b.Navigation("Observer");
 
                     b.Navigation("Target");
+                });
+
+            modelBuilder.Entity("Domain.Vacation", b =>
+                {
+                    b.HasOne("Domain.AppUser", "Host")
+                        .WithMany()
+                        .HasForeignKey("HostId");
+
+                    b.Navigation("Host");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

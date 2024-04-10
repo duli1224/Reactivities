@@ -255,6 +255,7 @@ namespace Persistence
                     Description = "example description",
                     EndDate = DateTime.UtcNow.AddMonths(7),
                     StartDate = DateTime.UtcNow.AddMonths(7),
+                    Category = "ski",
                     Title = "example",
                     Location = "Israel",
                     HostUserName = "host",
