@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using API.Extensions;
 using API.Extentions;
 using API.Middleware;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,6 +63,16 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var tableNames = context.Database.SqlQuery<string>(FormattableStringFactory.Create("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME NOT LIKE '%Migration%'")).ToList();
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    foreach (var tableName in tableNames)
+    {
+        logger.LogInformation( "888888888888888888888888888888888" + tableName); 
+        context.Database.ExecuteSql(FormattableStringFactory.Create("DELETE FROM {0}", tableName));
+    }
+
+        context.SaveChanges();
+
     await context.Database.MigrateAsync();
     await Seed.SeedData(context , userManager);
 }
