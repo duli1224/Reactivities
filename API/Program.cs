@@ -63,12 +63,6 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
-    var tableNames = context.Database.SqlQuery<string>(FormattableStringFactory.Create("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME NOT LIKE '%Migration%'")).ToList();
-    var logger = services.GetRequiredService<ILogger<Program>>();
-        context.Database.EnsureDeleted();
-logger.LogInformation("deleted ***************************************");
-        context.SaveChanges();
-
     await context.Database.MigrateAsync();
     await Seed.SeedData(context , userManager);
 }
