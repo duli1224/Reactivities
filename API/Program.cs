@@ -65,12 +65,8 @@ try
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var tableNames = context.Database.SqlQuery<string>(FormattableStringFactory.Create("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME NOT LIKE '%Migration%'")).ToList();
     var logger = services.GetRequiredService<ILogger<Program>>();
-    foreach (var tableName in tableNames)
-    {
-        logger.LogInformation( "888888888888888888888888888888888" + tableName); 
-        context.Database.ExecuteSql(FormattableStringFactory.Create("DELETE FROM {0}", tableName));
-    }
-
+        context.Database.EnsureDeleted();
+logger.LogInformation("deleted ***************************************");
         context.SaveChanges();
 
     await context.Database.MigrateAsync();
