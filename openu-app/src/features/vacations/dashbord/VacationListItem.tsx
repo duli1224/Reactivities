@@ -18,7 +18,7 @@ export default function VacationListItem({ vacation }: Props) {
                     <Item.Image style={{ marginBottom: 5 }} size='tiny' circular src={vacation
                         .host?.image || '/assets/user.png'} />
                         <Item.Content>
-                            <Item.Header as={Link} to={`/vacation/${vacation.id}`}>
+                            <Item.Header as={Link} to={`/vacations/${vacation.id}`}>
                                 {vacation.title}
                             </Item.Header>
                             <Item.Description>

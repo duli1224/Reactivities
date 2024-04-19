@@ -29,6 +29,14 @@ export default class ActivityStore {
                 this.loadActivities();
             }
         )
+
+        reaction (
+            () => this.selectedVacationId,
+            () => {
+                this.pagingParams = new PagingParams();
+                this.activityRegistry.clear();
+            }
+        )
     }
 
     setPagingParams = (pagingParams: PagingParams) => {
